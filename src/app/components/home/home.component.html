@@ -1,0 +1,144 @@
+<ng-container>
+
+  <div class="d-flex">
+    <div>
+      <p class="text-primary">Saldo disponible: ${{ account.availableBalance }}</p>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary ml-auto"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+      (click)="openModal"
+    >
+      Añadir destinatario
+    </button>
+  </div>
+
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo destinatario</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3 row">
+            <label for="rut" class="col-sm-2 col-form-label">Rut</label>
+            <div class="col-sm-10">
+              <input [(ngModel)]="newContact.rut" type="text" class="form-control" id="inputRut">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="name" class="col-sm-2 col-form-label">Nombre</label>
+            <div class="col-sm-10">
+              <input [(ngModel)]="newContact.name" type="text" class="form-control" id="inputName">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="email" class="col-sm-2 col-form-label">Correo</label>
+            <div class="col-sm-10">
+              <input [(ngModel)]="newContact.email" type="email" class="form-control" id="inputEmail">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="phone" class="col-sm-2 col-form-label">Teléfono</label>
+            <div class="col-sm-10">
+              <input [(ngModel)]="newContact.phone" type="tel" class="form-control" id="inputPhone">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="accountNumber" class="col-sm-2 col-form-label">Cuenta</label>
+            <div class="col-sm-10">
+              <input [(ngModel)]="newContact.accountNumber" type="number" class="form-control" id="inputAccountNumber">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="destinationBank" class="col-sm-2 col-form-label">Banco</label>
+            <div class="col-sm-10">
+              <select  [(ngModel)]="newContact.destinationBank"class="form-select" id="inputDestinationBank">
+                <option selected>Selecciona banco de destino</option>
+                <option [value]="bank.id" *ngFor="let bank of banks">{{bank.nombre}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            (click)="closeModal"
+          >
+            Cerrar
+          </button>
+          <button type="button" class="btn btn-primary" (click)="createContact()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pt-5">
+    <div class="mb-3 row">
+      <label for="contact" class="col-sm-2 col-form-label">Destinatario</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="contact" />
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="amount" class="col-sm-2 col-form-label">Monto</label>
+      <div class="col-sm-10">
+        <input type="number" class="form-control" id="amount" />
+      </div>
+    </div>
+    <div class="d-flex">
+        <button
+        type="button"
+        class="btn btn-secondary ml-auto"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      >
+        Tranferir
+      </button>
+    </div>
+  </div>
+
+  <div class="pt-5">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Número de operación</th>
+          <th scope="col">RUT</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Banco</th>
+          <th scope="col">Monto</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="transfers.length">
+        <tr *ngFor="let transfer of transfers">
+          <th scope="row">{{ transfer.id }}</th>
+          <td>{{ transfer.rut }}</td>
+          <td>{{ transfer.name }}</td>
+          <td>{{ transfer.destinationBank.name }}</td>
+          <td>{{ transfer.amount }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container p-5 text-center">
+    <p>No hay transferencias</p>
+  </div>
+</ng-container>
